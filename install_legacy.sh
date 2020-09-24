@@ -1,21 +1,19 @@
 #!/bin/bash
 
 hostname="suchilBOX"
+root_password='suchilin'
 echo "Zapping disk"
 sgdisk --zap-all /dev/sda
 echo "partitioning"
 parted /dev/sda --script mklabel GPT  \
 	mkpart primary ext4 0  97%\
 	mkpart primary ext2 97% 100%
-read -n 1
 
 blockdev --rereadpt /dev/sda
 
 echo "Creating file systems"
 yes | mkswap -f /dev/sda2
 yes | mkfs.xfs -f /dev/sda1
-
-read -n 1
 
 ################################################################################
 #### Install Arch                                                           ####
@@ -50,7 +48,6 @@ mkinitcpio -p linux
 echo "Setting root password"
 echo "root:${root_password}" | chpasswd
 EOF
-read n 1
 
 ################################################################################
 #### Install boot loader                                                    ####
