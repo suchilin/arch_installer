@@ -5,7 +5,7 @@ root_password='suchilin'
 echo "Zapping disk"
 sgdisk --zap-all /dev/sda
 echo "partitioning"
-parted /dev/sda --script mklabel GPT  \
+parted /dev/sda --script mklabel msdos  \
 	mkpart primary ext4 0  97%\
 	mkpart primary ext2 97% 100%
 
