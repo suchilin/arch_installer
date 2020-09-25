@@ -2,6 +2,7 @@
 
 hostname="suchilBOX"
 root_password='suchilin'
+suchil_password='normita'
 echo "Zapping disk"
 sgdisk --zap-all /dev/sda
 echo "partitioning"
@@ -41,11 +42,29 @@ echo "Setting hostname"
 echo $hostname > /etc/hostname
 sed -i '/localhost/s/$'"/ $hostname/" /etc/hosts
 echo "Installing wifi packages"
-pacman --noconfirm -S iw wpa_supplicant dialog wpa_actiond
+pacman --noconfirm -S iw xorg-xinit xorg git
 echo "Generating initramfs"
 mkinitcpio -p linux
 echo "Setting root password"
 echo "root:${root_password}" | chpasswd
+mkdir src
+cd src
+git clone git://git.suckless.org/st
+cd st
+make clean install
+cd ..
+git clone git://git.suckless.org/dmenu
+cd dmenu
+make clean install
+cd ..
+git clone git://git.suckless.org/dwm
+cd dwm
+make clean install
+cd ../../
+rm -rf src
+useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power,scanner -s /bin/bash suchil
+echo "suchil:${suchil_password}" | chpasswd
+echo "exec dwm" >> /home/suchil/.xinitrc
 EOF
 
 ################################################################################
