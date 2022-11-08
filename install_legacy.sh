@@ -32,10 +32,10 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 ################################################################################
 arch-chroot /mnt /bin/bash <<EOF
 echo "Setting and generating locale"
-echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+echo "es_MX.UTF-8 UTF-8" > /etc/locale.gen
 locale-gen
-export LANG=en_US.UTF-8
-echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+export LANG=es_MX.UTF-8
+echo "LANG=es_MX.UTF-8" >> /etc/locale.conf
 echo "Setting time zone"
 ln -s /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 echo "Setting hostname"
